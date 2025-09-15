@@ -48,4 +48,17 @@ class PetStoreApiTest {
                 .body("name", equalTo("Rex"))
                 .body("status", equalTo("available"));
     }
+
+    @Test
+    void testDeletePetWithAuth() {
+        int petId = 123456; // make sure this pet exists first
+
+        given()
+                .header("api_key", "special-key")   // Petstore default test key
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/pet/{petId}", petId)
+                .then()
+                .statusCode(200); // expect successful deletion
+    }
 }
