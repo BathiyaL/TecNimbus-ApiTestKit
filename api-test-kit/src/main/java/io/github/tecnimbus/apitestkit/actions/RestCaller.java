@@ -1,5 +1,8 @@
 package io.github.tecnimbus.apitestkit.actions;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +14,30 @@ public class RestCaller {
     public static Map<String, String> queryParams = new HashMap<>();
     public static String requestBody = "";
 
-    public static void send() {
+    public static Response send() {
       // TODO: Implement the logic to send the HTTP request using the specified parameters.
+
+        // Construct the full URL
+        String fullUrl = baseURI + endpoint;
+
+        // Configure Rest Assured
+        var requestSpec = RestAssured.given();
+
+        // Add headers if present
+        if (!headers.isEmpty()) {
+            requestSpec.headers(headers);
+        }
+
+        // Add query parameters if present
+        if (!queryParams.isEmpty()) {
+            requestSpec.queryParams(queryParams);
+        }
+
+        // Execute the GET request and return the response
+        if (requestMethod == RequestMethod.GET) {
+            return requestSpec.get(fullUrl);
+        } else {
+            throw new UnsupportedOperationException("Only GET requests are supported in this implementation.");
+        }
     }
 }
