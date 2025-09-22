@@ -30,14 +30,19 @@ public class RestCaller {
 
         // Add query parameters if present
         if (!queryParams.isEmpty()) {
+            System.out.println("Adding query params: " + queryParams);
             requestSpec.queryParams(queryParams);
         }
 
-        // Execute the GET request and return the response
-        if (requestMethod == RequestMethod.GET) {
-            return requestSpec.get(fullUrl);
-        } else {
-            throw new UnsupportedOperationException("Only GET requests are supported in this implementation.");
-        }
+        HttpMethodHandler handler = getHandlerForMethod(requestMethod);
+        return handler.handle(requestSpec, fullUrl);
+    }
+
+    private static HttpMethodHandler getHandlerForMethod(RequestMethod method) {
+        return switch (method) {
+            case GET -> new GetMethodHandler();
+            case POST -> new PostMethodHandler();
+            default -> throw new UnsupportedOperationException("Unsupported HTTP method: " + method);
+        };
     }
 }
