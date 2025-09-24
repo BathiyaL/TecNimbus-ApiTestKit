@@ -1,5 +1,6 @@
-package io.github.tecnimbus.apitestkit.actions;
+package io.github.tecnimbus.apitestkit.handlers;
 
+import io.github.tecnimbus.apitestkit.handlers.HttpMethodHandler;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
 

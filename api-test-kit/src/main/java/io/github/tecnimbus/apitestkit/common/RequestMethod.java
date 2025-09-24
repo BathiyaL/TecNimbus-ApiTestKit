@@ -1,4 +1,4 @@
-package io.github.tecnimbus.apitestkit.actions;
+package io.github.tecnimbus.apitestkit.common;
 
 public enum RequestMethod {
     GET,

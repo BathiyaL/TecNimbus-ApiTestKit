@@ -1,5 +1,7 @@
 package io.github.tecnimbus.apitestkit.actions;
 
+import io.github.tecnimbus.apitestkit.common.RequestMethod;
+
 public class RestCallerTest {
 
     public static void main(String[] args) {
@@ -10,8 +12,6 @@ public class RestCallerTest {
         RestCaller.queryParams.put("status2", "available2");
 
         var response = RestCaller.send();
-        System.out.println("Response Status Code: " + response.getStatusCode());
-        System.out.println("Response Body: " + response.getBody().asString());
 
     }
 }

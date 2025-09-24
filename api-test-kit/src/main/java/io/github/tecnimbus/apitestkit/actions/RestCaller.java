@@ -1,41 +1,51 @@
 package io.github.tecnimbus.apitestkit.actions;
 
+import io.github.tecnimbus.apitestkit.common.RequestMethod;
+import io.github.tecnimbus.apitestkit.handlers.GetMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.HttpMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.PostMethodHandler;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RestCaller {
+    private static final Logger logger = LoggerFactory.getLogger(RestCaller.class);
+
     public static RequestMethod requestMethod = RequestMethod.GET;
     public static String baseURI = "http://localhost";
     public static String endpoint = "";
     public static Map<String, String> headers = new HashMap<>();
     public static Map<String, String> queryParams = new HashMap<>();
     public static String requestBody = "";
+    public static boolean enableLogging = true;
 
     public static Response send() {
-      // TODO: Implement the logic to send the HTTP request using the specified parameters.
-
-        // Construct the full URL
         String fullUrl = baseURI + endpoint;
-
-        // Configure Rest Assured
         var requestSpec = RestAssured.given();
 
-        // Add headers if present
         if (!headers.isEmpty()) {
             requestSpec.headers(headers);
         }
-
-        // Add query parameters if present
         if (!queryParams.isEmpty()) {
-            System.out.println("Adding query params: " + queryParams);
             requestSpec.queryParams(queryParams);
         }
 
+        if (enableLogging) {
+            logRequest(fullUrl);
+        }
+
         HttpMethodHandler handler = getHandlerForMethod(requestMethod);
-        return handler.handle(requestSpec, fullUrl);
+        Response response = handler.handle(requestSpec, fullUrl);
+
+        if (enableLogging) {
+            logResponse(response);
+        }
+
+        return response;
     }
 
     private static HttpMethodHandler getHandlerForMethod(RequestMethod method) {
@@ -44,5 +54,27 @@ public class RestCaller {
             case POST -> new PostMethodHandler();
             default -> throw new UnsupportedOperationException("Unsupported HTTP method: " + method);
         };
+    }
+
+    private static void logRequest(String fullUrl) {
+        logger.info("""
+        Request Details:
+        - URL: {}
+        - Method: {}
+        - Headers: {}
+        - Query Params: {}
+        - Body: {}
+        """,
+                fullUrl, requestMethod, headers, queryParams, requestBody.isEmpty() ? "N/A" : requestBody);
+    }
+
+    private static void logResponse(Response response) {
+        logger.info("""
+        Response Details:
+        - Status Code: {}
+        - Headers: {}
+        - Body: {}
+        """,
+                response.getStatusCode(), response.getHeaders(), response.getBody().asString());
     }
 }
