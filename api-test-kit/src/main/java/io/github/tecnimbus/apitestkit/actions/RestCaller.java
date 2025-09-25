@@ -72,9 +72,9 @@ public class RestCaller {
         logger.info("""
         Response Details:
         - Status Code: {}
-        - Headers: {}
         - Body: {}
+        - Headers:\n{}
         """,
-                response.getStatusCode(), response.getHeaders(), response.getBody().asString());
+                response.getStatusCode(), response.getBody().asString(), response.getHeaders());
     }
 }
