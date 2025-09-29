@@ -20,6 +20,8 @@ public class RestCaller {
     public static String endpoint = "";
     public static Map<String, String> headers = new HashMap<>();
     public static Map<String, String> queryParams = new HashMap<>();
+    public static Map<String, String> pathParams = new HashMap<>();
+
     public static String requestBody = "";
     public static boolean enableLogging = true;
 
@@ -32,6 +34,9 @@ public class RestCaller {
         }
         if (!queryParams.isEmpty()) {
             requestSpec.queryParams(queryParams);
+        }
+        if (!pathParams.isEmpty()) {
+            requestSpec.pathParams(pathParams);
         }
 
         if (enableLogging) {
@@ -63,9 +68,10 @@ public class RestCaller {
         - Method: {}
         - Headers: {}
         - Query Params: {}
+        - Path Params: {}
         - Body: {}
         """,
-                fullUrl, requestMethod, headers, queryParams, requestBody.isEmpty() ? "N/A" : requestBody);
+                fullUrl, requestMethod, headers, queryParams, pathParams, requestBody.isEmpty() ? "N/A" : requestBody);
     }
 
     private static void logResponse(Response response) {

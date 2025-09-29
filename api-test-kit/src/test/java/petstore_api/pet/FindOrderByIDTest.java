@@ -6,25 +6,37 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FindOrderByIDTest {
     @BeforeAll
     static void setup() {
         RestCaller.baseURI = "https://petstore.swagger.io/v2";
-        RestCaller.endpoint = "/store/order/4";
+        RestCaller.endpoint = "/store/order/{orderId}";
     }
 
     @Test
-    void SuccessFindPetWithValidStatus() {
+    void SuccessFindOrderWithValidID() {
         RestCaller.requestMethod = RequestMethod.GET;
+        RestCaller.pathParams.put("orderId", "4");
+
         Response response = RestCaller.send();
 
         assertEquals(200, response.getStatusCode(), "Expected HTTP status code 200");
         assertEquals("application/json", response.getContentType(), "Expected content type JSON");
-        assertFalse(response.getBody().as(List.class).isEmpty(), "Response JSON array should not be empty");
+
+        int id = response.getBody().jsonPath().getInt("id");
+        assertEquals(4, id, "Expected `id` field to be 4");
+    }
+
+    @Test
+    void ErrorOrderIDNotFound() {
+        RestCaller.requestMethod = RequestMethod.GET;
+        RestCaller.pathParams.put("orderId", "-4");
+
+        Response response = RestCaller.send();
+
+        assertEquals(404, response.getStatusCode(), "Expected HTTP status code 404");
     }
 }
+
