@@ -1,11 +1,11 @@
 package io.github.tecnimbus.apitestkit.handlers;
 
-import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
-public class GetMethodHandler implements HttpMethodHandler {
+public class PatchMethodHandler implements HttpMethodHandler {
     @Override
     public Response handle(RequestSpecification requestSpec, String fullUrl) {
-        return requestSpec.get(fullUrl);
+        return requestSpec.patch(fullUrl);
     }
 }
