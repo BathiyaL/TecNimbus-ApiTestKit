@@ -1,7 +1,14 @@
 package io.github.tecnimbus.apitestkit.actions;
 
 import io.github.tecnimbus.apitestkit.common.RequestMethod;
-import io.github.tecnimbus.apitestkit.handlers.*;
+import io.github.tecnimbus.apitestkit.handlers.HttpMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.GetMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.OptionsMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.PutMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.PostMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.DeleteMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.PatchMethodHandler;
+import io.github.tecnimbus.apitestkit.handlers.HeadMethodHandler;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
@@ -57,6 +64,9 @@ public class RestCaller {
             case POST -> new PostMethodHandler();
             case DELETE -> new DeleteMethodHandler();
             case PATCH -> new PatchMethodHandler();
+            case PUT -> new PutMethodHandler();
+            case HEAD -> new HeadMethodHandler();
+            case OPTIONS -> new OptionsMethodHandler();
             default -> throw new UnsupportedOperationException("Unsupported HTTP method: " + method);
         };
     }
