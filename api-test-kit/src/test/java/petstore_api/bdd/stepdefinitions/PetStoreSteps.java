@@ -1,4 +1,4 @@
-package petstore_api.bdd;
+package petstore_api.bdd.stepdefinitions;
 
 import io.github.tecnimbus.apitestkit.actions.RestCaller;
 import io.github.tecnimbus.apitestkit.common.RequestMethod;
