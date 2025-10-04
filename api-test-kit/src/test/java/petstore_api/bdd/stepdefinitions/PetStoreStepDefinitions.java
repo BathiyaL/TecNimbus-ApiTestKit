@@ -3,7 +3,12 @@ package petstore_api.bdd.stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.spring.CucumberContextConfiguration;
+import io.github.tecnimbus.apitestkit.ApiTestKitApplication;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@CucumberContextConfiguration
+@SpringBootTest(classes = ApiTestKitApplication.class)
 public class PetStoreStepDefinitions {
 
     private final PetStoreSteps petStoreSteps = new PetStoreSteps();
