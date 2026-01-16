@@ -1,5 +1,6 @@
 package io.github.tecnimbus.apitestkit.actions;
 
+import io.github.tecnimbus.apitestkit.auth.Auth;
 import io.github.tecnimbus.apitestkit.common.RequestMethod;
 import io.github.tecnimbus.apitestkit.handlers.HttpMethodHandler;
 import io.github.tecnimbus.apitestkit.handlers.GetMethodHandler;
@@ -26,6 +27,8 @@ public class RestCaller {
     public static Map<String, String> headers = new HashMap<>();
     public static Map<String, String> queryParams = new HashMap<>();
     public static Map<String, String> pathParams = new HashMap<>();
+    public static Auth authorization;
+
 
     public static String requestBody = "";
     public static boolean enableLogging = true;
@@ -42,6 +45,10 @@ public class RestCaller {
         }
         if (!pathParams.isEmpty()) {
             requestSpec.pathParams(pathParams);
+        }
+
+        if (authorization != null) {
+            authorization.apply(requestSpec);
         }
 
         if (enableLogging) {
