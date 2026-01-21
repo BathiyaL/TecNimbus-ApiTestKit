@@ -1,6 +1,8 @@
 package petstore_api.pet;
 
 import io.github.tecnimbus.apitestkit.actions.RestCaller;
+import io.github.tecnimbus.apitestkit.auth.BasicAuth;
+import io.github.tecnimbus.apitestkit.auth.BearerTokenAuth;
 import io.github.tecnimbus.apitestkit.common.RequestMethod;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
@@ -79,5 +81,28 @@ class PetStoreApiTests {
         assertEquals(200, response.getStatusCode(), "Expected HTTP status code 200");
         assertEquals("application/json", response.getContentType(), "Expected content type JSON");
         assertEquals("unknown", response.getBody().jsonPath().getString("type"), "Expected response type to be 'unknown'");
+    }
+
+
+    @Test
+    void testWithBasicAuth() {
+        RestCaller.authorization = new BasicAuth("username", "password");
+        RestCaller.endpoint = "/pet/findByStatus";
+        RestCaller.requestMethod = RequestMethod.GET;
+
+        Response response = RestCaller.send();
+
+        assertEquals(200, response.getStatusCode());
+    }
+
+    @Test
+    void testWithBearerTokenAuth() {
+        RestCaller.authorization = new BearerTokenAuth("your-token-here");
+        RestCaller.endpoint = "/pet/findByStatus";
+        RestCaller.requestMethod = RequestMethod.GET;
+
+        Response response = RestCaller.send();
+
+        assertEquals(200, response.getStatusCode());
     }
 }
