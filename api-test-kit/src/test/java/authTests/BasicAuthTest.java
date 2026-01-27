@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BasicAuthTest {
     @BeforeAll
     static void setup() {
-        RestCaller.baseURI = "https://httpbin.org/basic-auth";
+        RestCaller.baseURI = "https://postman-echo.com";
     }
 
     @Test
     void testWithBasicAuth() {
-        RestCaller.authorization = new BasicAuth("user", "passwd");
-        RestCaller.endpoint = "/user/passwd";
+        RestCaller.authorization = new BasicAuth("postman", "password");
+        RestCaller.endpoint = "/basic-auth";
         RestCaller.requestMethod = RequestMethod.GET;
 
         Response response = RestCaller.send();
