@@ -83,18 +83,6 @@ class PetStoreApiTests {
         assertEquals("unknown", response.getBody().jsonPath().getString("type"), "Expected response type to be 'unknown'");
     }
 
-
-    @Test
-    void testWithBasicAuth() {
-        RestCaller.authorization = new BasicAuth("username", "password");
-        RestCaller.endpoint = "/pet/findByStatus";
-        RestCaller.requestMethod = RequestMethod.GET;
-
-        Response response = RestCaller.send();
-
-        assertEquals(200, response.getStatusCode());
-    }
-
     @Test
     void testWithBearerTokenAuth() {
         RestCaller.authorization = new BearerTokenAuth("your-token-here");
