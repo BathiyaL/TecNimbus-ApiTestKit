@@ -1,7 +1,6 @@
 package petstore_api.pet;
 
 import io.github.tecnimbus.apitestkit.actions.RestCaller;
-import io.github.tecnimbus.apitestkit.auth.BasicAuth;
 import io.github.tecnimbus.apitestkit.auth.BearerTokenAuth;
 import io.github.tecnimbus.apitestkit.common.RequestMethod;
 import io.restassured.response.Response;

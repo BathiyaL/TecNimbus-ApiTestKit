@@ -24,5 +24,7 @@ public class BasicAuthTest {
         Response response = RestCaller.send();
 
         assertEquals(200, response.getStatusCode());
+        boolean isAuthenticated = response.getBody().jsonPath().getBoolean("authenticated");
+        assertEquals(true, isAuthenticated, "Expected 'authenticated' to be true");
     }
 }
