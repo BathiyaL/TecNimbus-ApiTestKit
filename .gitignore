@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### mvn ###
+.DS_Store
+.gitattributes
+.mvn/
+mvnw
+mvnw.cmd
