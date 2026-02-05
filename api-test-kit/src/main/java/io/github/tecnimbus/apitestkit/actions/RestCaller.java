@@ -42,20 +42,27 @@ public class RestCaller {
         }
         if (!queryParams.isEmpty()) {
             requestSpec.queryParams(queryParams);
+            System.out.println("pathParams1: #################################################### " + pathParams);
         }
         if (!pathParams.isEmpty()) {
             requestSpec.pathParams(pathParams);
+            System.out.println("pathParams: #################################################### " + pathParams);
         }
 
         if (authorization != null) {
             authorization.apply(requestSpec);
         }
 
+        // TODO this need validation, only body supporting methods should add body
+        if (!requestBody.isEmpty()) {
+            requestSpec.body(requestBody);
+        }
         if (enableLogging) {
             logRequest(fullUrl);
         }
 
         HttpMethodHandler handler = getHandlerForMethod(requestMethod);
+        System.out.println("#################################################### " + handler.toString());
         Response response = handler.handle(requestSpec, fullUrl);
 
         if (enableLogging) {
