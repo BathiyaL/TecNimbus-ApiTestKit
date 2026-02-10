@@ -24,6 +24,7 @@ public class AddPetWithExcelData {
         int rowNumber = 2;
         int cellNumber = 1;
         String requestBody = ExcelReader.getCellData(filePath, sheetName, rowNumber, cellNumber);
+        System.out.println(requestBody);
 
         // Set up RestCaller
         RestCaller.endpoint = "/pet";
